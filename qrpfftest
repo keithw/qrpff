@@ -14,7 +14,7 @@ until ( eof STDIN ) {
 
   &c;
  
-  $got_output = join '', map { chr } @a;
+  $got_output = join '', map { pack("C",$_) } @a;
 
   if ( $wanted_output eq $got_output ) {
       print "It works.\n";
