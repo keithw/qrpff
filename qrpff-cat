@@ -2,9 +2,10 @@
 # $$$-byte qrpff, Keith Winstein and Marc Horowitz <sipb-iap-dvd@mit.edu>
 # MPEG 2 PS VOB file -> descrambled output on stdout.
 # arguments: filename, then title key bytes in least to most-significant order
-
-s''$/=\2048;while(<>){K=29;P=142;if((@a=unq"C*",_)[20]&48){H=5;_=unq
-b24,join"",@b=map{qB8,unqb8,chr(_^$a[--H+84])}@ARGV;s/...$/1$&/;O=unqV
+# XXX change @inc to @INC in the body, and map H-Q onto D-M
+@inc=@INC;
+s''$/=\2048;while(<>){K=29;P=142;if((@a=unq"C*",_)[20]&48){H=89;_=unq
+b24,join"",@b=map{qB8,unqb8,chr(_^$a[--H])}@inc;s/...$/1$&/;O=unqV
 ,qb25,_;L=73;M=256|(ord$b[4])<<9|ord$b[3];O=O>>8^(N=(I=255)&(O>>12^O>>
 4^O^O/8))<<17,M=M>>8^(I&(J=(Q=M>>14&7^M)^Q*8^Q<<6))<<9,_=(map{_%16or+I
 ^=P^=(Q=(unq"C*","\xb\ntd\xbz\x14d")[_/16%8])&110;I^=(72,@z=(64,72,K^=
