@@ -4,10 +4,10 @@
 # usage: < in.vob perl -I <k1>:<k2>:<k3>:<k4>:<k5> qrpff.pl > out.vob
 # where k1..k5 are title key bytes in least to most-significant order
 
-s''$/=\2048;while(<>){G=29;R=142;if((@a=unqT="C*",_)[20]&48){D=89;_=unq
-b24,join"",@b=map{qB8,unqb8,chr(_^$a[--D])}@INC;s/...$/1$&/;Q=unqV
-,qb25,_;H=73;O=256|(ord$b[4])<<9|ord$b[3];Q=Q>>8^(P=(E=255)&(Q>>12^Q>>
-4^Q^Q/8))<<17,O=O>>8^(E&(F=(S=O>>14&7^O)^S*8^S<<6))<<9,_=(map{_%16or+E
-^=R^=(S=(unqT,"\xb\ntd\xbz\x14d")[_/16%8])&110;E^=(72,@z=(64,72,G^=
-12*(_%16-2?0:S&17)),H^=_%64?12:0,@z)[_%8]}(16..271))[_]^((D>>=8)+=P+(~
-F&E))for@a[128..$#a]}print+qT,@a}';s/q/pack+/g;s/[D-HO-T_]/\$$&/g;eval
+s''$/=\2048;while(<>){G=29;R=142;if((@a=unqT="C*",_)[20]&48){D=89;_=unqb24,join
+"",@b=map{qB8,unqb8,chr(_^$a[--D])}@INC;s/...$/1$&/;Q=unqV,qb25,_;H=73;O=256|(
+ord$b[4])<<9|ord$b[3];Q=Q>>8^(P=(E=255)&(Q>>12^Q>>4^Q/8^Q))<<17,O=O>>8^(E&(F=(S
+=O>>14&7^O)^S*8^S<<6))<<9,_=(map{_%16or+E^=R^=(S=(unqT,"\xb\ntd\xbz\x14d")[_/16
+%8])&110;E^=(72,@z=(64,72,G^=12*(_%16-2?0:S&17)),H^=_%64?12:0,@z)[_%8]}(16..271
+))[_]^((D>>=8)+=P+(~F&E))for@a[128..$#a]}print+qT,@a}';s/[D-HO-T_]/\$$&/g;
+s/q/pack+/g;eval
