@@ -1,4 +1,4 @@
-#include<sys/types.h>
+#include<unistd.h>
 #define K(i)(x[i]^s[i+84])<<
 u_char x[]="'G_n\0277O~cr3sfw6v",y,z,t[256],s[2048];main(n){for(;z^51;t[y++]=z^
 (z&z*2&34)*6)z=x[y&7]+18^K(y>>4|8)1^y*257/8^y/128*176;for(read(0,x,5);read(0,s,
