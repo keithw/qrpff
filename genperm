@@ -1,0 +1,45 @@
+#!/usr/bin/perl -lw
+
+@sequence_a0 = (192, 0, 12);
+$a = 29;
+@sequence_a1 = (@sequence_a0, 192, @sequence_a0, 0);
+
+$b = 69;
+@sequence_b = (0, 0, 12, 0);
+
+@sequence_c0 = (100, 10);
+@sequence_c1 = (@sequence_c0, 106, 4, @sequence_c0, 10, 100);
+$c = 168;
+@sequence_c2 = (@sequence_c1) x 2;
+
+$x = $y = $z = $q = 0;
+
+sub xa {
+    $sequence_a1[ $x++ % 8 ];
+}
+
+sub ya {
+    $sequence_b[ $y++ % 4 ];
+}
+
+sub za {
+    $sequence_c2[ $z++ % 16 ];
+}
+
+$i = 51;
+
+for $block ( 1 .. 16 ) {
+    push @x, 64, 72, $a, $b;
+    push @x, 64, 72, $a, 72;
+    push @x, 64, 72, $a, $b;
+    push @x, 64, 72, $a, $c;
+
+    $a ^= xa;
+    $b ^= ya;
+    $c ^= za;
+}
+
+for (@x) {
+    print $i;
+    $i ^= $_;
+}
