@@ -1,0 +1,18 @@
+#!/usr/bin/perl -w
+
+require "qrpff";
+
+for $orbit_start ( 0 .. 255 ) {
+  $orbit_location = $orbit_start;
+  while ( not $hit{ $orbit_location } ) {
+    push @{ $permutation{ $orbit_start } }, $orbit_location;
+    $orbit_pointer{ $orbit_location } = $orbit_start;
+    $hit{ $orbit_location } = 1;
+    $orbit_location = tab( $orbit_location );
+  }
+}
+
+for ( 0 .. 255 ) {
+  print join " => ", @{ $permutation{ $orbit_pointer{ $_ } } };
+  print "\n";
+}
