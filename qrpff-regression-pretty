@@ -43,8 +43,6 @@ sub cssdescramble {
     $chris = (($marc >> 14) & 7) ^ $marc;
     $chris ^= ($chris << 3) ^ ($chris << 6);
 
-print "($val)\n";
-
     $garry &= 255;
     $chris &= 255;
 
