@@ -2,6 +2,8 @@
 
 require "qrpff";
 
+use bytes;
+
 $i=0;
 until ( eof STDIN ) {
   last if $i++ > 0;
