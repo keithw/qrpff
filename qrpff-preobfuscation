@@ -30,6 +30,8 @@ sub cssdescramble {
   $offset = ($sector[ 13 ] & 0x07) + 20;
   return $sector if ( ($sector[ $offset ] & 0x30) != 0x10 );
 
+  print "Decrypting.\n";
+
   $salted[ $_ ] = $key[ $_ ] ^ $sector[ 0x54 + $_ ] for (0 .. 4);
   $mark = (($salted[4] << 17) | ($salted[3] << 9) | ($salted[2] << 1)) + 8 - ($salted[2] & 7);
   $mark = (r($mark & 0xff)<<17) | (r(($mark >> 8) & 0xff) << 9)
@@ -57,16 +59,25 @@ sub cssdescramble {
   return join '', map { chr } @sector;
 }
 
-until ( eof STDIN ) {
-  read STDIN, $input, 2048;
-  read STDIN, $key, 5;
-  read STDIN, $wanted_output, 2048;
-  
-  $got_output = cssdescramble $input, $key;
-  
-  if ( $wanted_output eq $got_output ) {
-    print "It works!\n";
-  } else {
-    print "Broken.\n";
+read STDIN, $input, 2048;
+read STDIN, $key, 5;
+read STDIN, $wanted_output, 2048;
+
+$got_output = cssdescramble $input, $key;
+
+@got = map { ord } split //, $got_output;
+@wanted = map { ord } split //, $wanted_output;
+
+for ( 0 .. 2047 ) {
+  if ( $got[ $_ ] != $wanted[ $_ ] ) {
+    print "$_ ";
   }
+}
+
+print "\n";
+
+if ( $wanted_output eq $got_output ) {
+  print "It works!\n";
+} else {
+  print "Broken.\n";
 }
