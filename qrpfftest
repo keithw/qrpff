@@ -2,16 +2,21 @@
 
 require "qrpff";
 
+$i=0;
 until ( eof STDIN ) {
+  last if $i++ > 16;
   read STDIN, $input, 2048;
   read STDIN, $key, 5;
   read STDIN, $wanted_output, 2048;
+
+  @a = map { ord } split //, $input;
+  @b = map { ord } split //, $key;
   
-  $got_output = &c($input, $key);
+  $got_output = join '', map { chr } &c;
   
   if ( $wanted_output eq $got_output ) {
-    print "It works!\n";
+    print "It works.\n";
   } else {
-    print "Broken.\n";
+    print "Broken!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
   }
 }
