@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 while(read+STDIN,$_,2048){$a=29;$b=73;$c=142;if((@a=unpack'C*',$_)[20]&48){$h
-=5;$_=pack+B8,unpack+b8,chr($_^$a[--$h+84])for@b=@ARGV;$_=unpack+b24,join'',@
+=5;@b=map{pack+B8,unpack+b8,chr($_^$a[--$h+84])}@ARGV;$_=unpack+b24,join'',@
 b;s/...$/1$&/;$d=unpack+V,pack+b25,$_;$e=256|(ord$b[4])<<9|ord$b[3];$d=$d>>8
 ^($f=($t=255)&($d>>12^$d>>4^$d^$d/8))<<17,$e=$e>>8^($t&($g=($q=$e>>14&7^$e)^
 $q*8^$q<<6))<<9,$_=(map{$_%16or$t^=$c^=($m=(11,10,116,100,11,122,20,100)[$_/
