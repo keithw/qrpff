@@ -10,9 +10,11 @@ until ( eof STDIN ) {
   read STDIN, $wanted_output, 2048;
 
   @a = map { ord } split //, $input;
-  @b = map { ord } split //, $key;
-  
-  $got_output = join '', map { chr } &c;
+  @b = reverse map { ord } split //, $key;
+ 
+  &c;
+ 
+  $got_output = join '', map { chr } @a;
   
   if ( $wanted_output eq $got_output ) {
     print "It works.\n";
