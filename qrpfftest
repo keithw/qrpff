@@ -4,7 +4,7 @@ require "qrpff";
 
 $i=0;
 until ( eof STDIN ) {
-  last if $i++ > 0;
+#  last if $i++ > 0;
   read STDIN, $input, 2048;
   read STDIN, $key, 5;
   read STDIN, $wanted_output, 2048;
@@ -15,8 +15,6 @@ until ( eof STDIN ) {
   &c;
  
   $got_output = join '', map { chr } @a;
-
-  @a = map { ord } split //, $got_output;
 
   if ( $wanted_output eq $got_output ) {
       print "It works.\n";
