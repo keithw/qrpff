@@ -4,7 +4,7 @@ require "qrpff";
 
 $i=0;
 until ( eof STDIN ) {
-  last if $i++ > 16;
+#  last if $i++ > 16;
   read STDIN, $input, 2048;
   read STDIN, $key, 5;
   read STDIN, $wanted_output, 2048;
