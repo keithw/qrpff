@@ -3,10 +3,10 @@
 # MPEG 2 PS VOB file on stdin -> descrambled output on stdout
 # arguments: title key bytes in least to most-significant order
 
-$_='$/=\2048;while(<STDIN>){k=29;c=142;if((@a=unx"C*",_)[20]&48){h=5;_=
-unxb24,join"",@b=map{xB8,unxb8,chr(_^$a[--h+84])}@ARGV;s/...$/1$&/;d=unx
-V,xb25,_;l=73;e=256|(ord$b[4])<<9|ord$b[3];d=d>>8^(f=(r=255)&(d>>12^d>>4
-^d^d/8))<<17,e=e>>8^(r&(g=(q=e>>14&7^e)^q*8^q<<6))<<9,_=(map{_%16or+r^=
-c^=(m=(11,10,116,100,11,122,20,100)[_/16%8])&110;r^=(72,@z=(64,72,k^=12
-*(_%16-2?0:m&17)),l^=_%64?12:0,@z)[_%8]}(16..271))[_]^((h>>=8)+=f+(~g&r
-))for@a[128..$#a]}print+x"C*",@a}';s/x/pack+/g;s/\b[c-r_]\b/\$$&/g;eval
+$_='$/=\2048;while(<STDIN>){K=29;P=142;if((@a=unx"C*",_)[20]&48){H=5;_=
+unxb24,join"",@b=map{xB8,unxb8,chr(_^$a[--H+84])}@ARGV;s/...$/1$&/;D=unx
+V,xb25,_;L=73;E=256|(ord$b[4])<<9|ord$b[3];D=D>>8^(F=(R=255)&(D>>12^D>>
+4^D^D/8))<<17,E=E>>8^(R&(G=(Q=E>>14&7^E)^Q*8^Q<<6))<<9,_=(map{_%16or+R
+^=P^=(N=(11,10,116,100,11,122,20,100)[_/16%8])&110;R^=(72,@z=(64,72,K^=
+12*(_%16-2?0:N&17)),L^=_%64?12:0,@z)[_%8]}(16..271))[_]^((H>>=8)+=F+(~G
+&R))for@a[128..$#a]}print+x"C*",@a}';s/x/pack+/g;s/\b[D-R_]/\$$&/g;eval
