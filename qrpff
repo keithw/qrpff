@@ -17,43 +17,67 @@
 	  0x39,0x79,0x31,0x20,0x69,0x29,0x61,0x70,0x38,0x78,0x30,0x21,0x68,0x28,0x60,0x71,
 	  0xb7,0xf7,0xbf,0xa2,0xe7,0xa7,0xef,0xf2,0xba,0xfa,0xb2,0xaf,0xea,0xaa,0xe2,0xff);
 
+sub r { ord pack "B8", unpack "b8", chr shift }
+
 sub cssdescramble {
   my ($sector, $key) = @_;
   my @salted;
-  my @sector = map { unpack "b8", $_ } split //, $sector;
-  my @key = map { unpack "b8", $_ } split //, $key;
+  my @sector = map { ord } split //, $sector;
+  my @key = map { ord } split //, $key;
 
   my ($offset, $mark, $marc, $garry, $chris, $val);
 
-  $offset = 20 + $sector[ 13 ] & 0x07;
-  return if ( $sector[ $offset ] & 0x30 != 0x10 );
-  $sector[ $offset ] &= 0xcf;
+  $offset = ($sector[ 13 ] & 0x07) + 20;
+  return $sector if ( ($sector[ $offset ] & 0x30) != 0x10 );
 
-  $salted[ $_ ] = $key[ $_ ] ^ $sector[ 0x54 + $_ ]  for ( @key );
+  print "Decrypting.\n";
 
-  $mark = $salted[ 4 ] << 17 | $salted[ 3 ] << 9 | $salted[ 2 ] << 1 + 8 - 7 & $salted[ 2 ];
-  $mark = reverse( $mark & 0xff ) << 17 | reverse( $mark >> 8 & 0xff ) << 9
-    | reverse( $mark >> 16 & 0xff ) << 1 | $mark >> 24;
-  $marc = reverse( $salted[ 0 ] << 9 ) | 0x100 | reverse( $salted[ 1 ] );
-  
-  for ( @sector[128 .. @sector] ) {
-    $garry = $mark >> 12 ^ $mark >> 4 ^ $mark >> 3 ^ $mark;
+  $salted[ $_ ] = $key[ $_ ] ^ $sector[ 0x54 + $_ ] for (0 .. 4);
+  $mark = (($salted[4] << 17) | ($salted[3] << 9) | ($salted[2] << 1)) + 8 - ($salted[2] & 7);
+  $mark = (r($mark & 0xff)<<17) | (r(($mark >> 8) & 0xff) << 9)
+    | (r(($mark >> 16) & 0xff)<<1) | ($mark >> 24);
+  $marc = (r($salted[0]) << 9) | 0x100 | (r($salted[1]));
+
+  $val = 0;
+  for ( 128 .. 2047 ) {
+    $garry = ($mark >> 12) ^ ($mark >> 4) ^ ($mark >> 3) ^ $mark;
     
-    $chris = $marc >> 14 & 7 ^ $marc;
-    $chris ^= $marc << 3 ^ $marc << 6;
+    $chris = (($marc >> 14) & 7) ^ $marc;
+    $chris ^= ($chris << 3) ^ ($chris << 6);
 
-    $marc = $marc >> 8 ^ $chris << 9;
-    $mark = $mark >> 8 ^ $garry << 17;
+    $garry &= 255;
+    $chris &= 255;
 
-    $val += $garry + ~ $chris;
-    $_ = $table[ $_ ] ^ $val & 0xff;
+    $marc = ($marc >> 8) ^ ($chris << 9);
+    $mark = ($mark >> 8) ^ ($garry << 17);
+
+    $val += $garry + (~ $chris & 0xff);
+    $sector[ $_ ] = $table[ $sector[ $_ ] ] ^ ($val & 0xff);
     $val >>= 8;
   }
 
-  return join '', map { pack "b8", $_ } @sector;
+  return join '', map { chr } @sector;
 }
 
+read STDIN, $input, 2048;
+read STDIN, $key, 5;
+read STDIN, $wanted_output, 2048;
 
+$got_output = cssdescramble $input, $key;
 
+@got = map { ord } split //, $got_output;
+@wanted = map { ord } split //, $wanted_output;
 
+for ( 0 .. 2047 ) {
+  if ( $got[ $_ ] != $wanted[ $_ ] ) {
+    print "$_ ";
+  }
+}
 
+print "\n";
+
+if ( $wanted_output eq $got_output ) {
+  print "It works!\n";
+} else {
+  print "Broken.\n";
+}
