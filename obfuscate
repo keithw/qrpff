@@ -1,0 +1,11 @@
+perl -pi -we 's/sector/a/g' qrpff
+perl -pi -we 's/key/b/g' qrpff
+perl -pi -we 's/salted/c/g' qrpff
+perl -pi -we 's/mark/d/g' qrpff
+perl -pi -we 's/marc/e/g' qrpff
+perl -pi -we 's/garry/f/g' qrpff
+perl -pi -we 's/chris/g/g' qrpff
+perl -pi -we 's/val/h/g' qrpff
+perl -pi -we 's/0xff/255/g' qrpff
+perl -pi -we 's/\n//g' qrpff
+perl -pi -we 's/\s+/ /g' qrpff
