@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 # $$$-byte qrpff, Keith Winstein and Marc Horowitz <sipb-iap-dvd@mit.edu>
 # MPEG 2 PS VOB file -> descrambled output on stdout.
-# usage: < in.vob perl -I <k1>:<k2>:<k3>:<k4>:<k5> qrpff.pl > out.vob
-# where k1..k5 are title key bytes in least to most-significant order
+# usage: cat in.vob | perl -I <k1>:<k2>:<k3>:<k4>:<k5> qrpff.pl > out.vob
+# where k1..k5 are the title key bytes in least to most-significant order
 
 s''$/=\2048;while(<>){G=29;R=142;if((@a=unqT="C*",_)[20]&48){D=89;_=unqb24,join
 "",@b=map{qB8,unqb8,chr(_^$a[--D])}@INC;s/...$/1$&/;Q=unqV,qb25,_;H=73;O=(ord$b
