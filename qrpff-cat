@@ -1,12 +1,12 @@
 #!/usr/bin/perl -w
 # $$$-byte qrpff, Keith Winstein and Marc Horowitz <sipb-iap-dvd@mit.edu>
-# MPEG 2 PS VOB file on stdin -> descrambled output on stdout
-# arguments: title key bytes in least to most-significant order
+# MPEG 2 PS VOB file -> descrambled output on stdout.
+# arguments: filename, then title key bytes in least to most-significant order
 
-$_='$/=\2048;while(<STDIN>){K=29;P=142;if((@a=unx"C*",_)[20]&48){H=5;_=
-unxb24,join"",@b=map{xB8,unxb8,chr(_^$a[--H+84])}@ARGV;s/...$/1$&/;D=unx
-V,xb25,_;L=73;E=256|(ord$b[4])<<9|ord$b[3];D=D>>8^(F=(R=255)&(D>>12^D>>
-4^D^D/8))<<17,E=E>>8^(R&(G=(Q=E>>14&7^E)^Q*8^Q<<6))<<9,_=(map{_%16or+R
-^=P^=(N=(11,10,116,100,11,122,20,100)[_/16%8])&110;R^=(72,@z=(64,72,K^=
-12*(_%16-2?0:N&17)),L^=_%64?12:0,@z)[_%8]}(16..271))[_]^((H>>=8)+=F+(~G
-&R))for@a[128..$#a]}print+x"C*",@a}';s/x/pack+/g;s/\b[D-R_]/\$$&/g;eval
+$_='$/=\2048;while(<>){K=29;P=142;if((@a=unx"C*",_)[20]&48){H=5;_=unx
+b24,join"",@b=map{xB8,unxb8,chr(_^$a[--H+84])}@ARGV;s/...$/1$&/;O=unxV
+,xb25,_;L=73;M=256|(ord$b[4])<<9|ord$b[3];O=O>>8^(F=(I=255)&(O>>12^O>>
+4^O^O/8))<<17,M=M>>8^(I&(J=(Q=M>>14&7^M)^Q*8^Q<<6))<<9,_=(map{_%16or+I
+^=P^=(N=(11,10,116,100,11,122,20,100)[_/16%8])&110;I^=(72,@z=(64,72,K^=
+12*(_%16-2?0:N&17)),L^=_%64?12:0,@z)[_%8]}(16..271))[_]^((H>>=8)+=F+(~J
+&I))for@a[128..$#a]}print+x"C*",@a}';s/x/pack+/g;s/[FH-Q_]/\$$&/g;eval
